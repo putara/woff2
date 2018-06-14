@@ -9,7 +9,8 @@ CXX ?= g++
 # It's helpful to be able to turn these off for fuzzing
 CANONICAL_PREFIXES ?= -no-canonical-prefixes
 NOISY_LOGGING ?= -DFONT_COMPRESSION_BIN
-COMMON_FLAGS = -fno-omit-frame-pointer $(CANONICAL_PREFIXES) $(NOISY_LOGGING) -D __STDC_FORMAT_MACROS
+COMMON_FLAGS = -static -static-libgcc -static-libstdc++ -fno-omit-frame-pointer $(CANONICAL_PREFIXES) $(NOISY_LOGGING) -D __STDC_FORMAT_MACROS
+LFLAGS += -static -static-libgcc -static-libstdc++
 
 ARFLAGS = crf
 
@@ -37,7 +38,7 @@ DECOBJ = $(BROTLIOBJ)/dec/*.o
 COMMONOBJ = $(BROTLIOBJ)/common/*.o
 
 OBJS = $(patsubst %, $(SRCDIR)/%, $(OUROBJ))
-EXECUTABLES=woff2_compress woff2_decompress woff2_info
+EXECUTABLES=woff2
 EXE_OBJS=$(patsubst %, $(SRCDIR)/%.o, $(EXECUTABLES))
 ARCHIVES=convert_woff2ttf_fuzzer convert_woff2ttf_fuzzer_new_entry
 ARCHIVE_OBJS=$(patsubst %, $(SRCDIR)/%.o, $(ARCHIVES))
